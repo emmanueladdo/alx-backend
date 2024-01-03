@@ -22,7 +22,7 @@ class FIFOCache(BaseCaching):
             self.queue.append(key)
             self.cache_data[key] = item
 
-            if len(self.queue) > self.MAX_ITEMS:
+            if len(self.queue) > BaseCaching.MAX_ITEMS:
                 removed_key = self.queue.pop(0)
                 self.cache_data.pop(removed_key)
                 print(f'DISCARD: {removed_key}')
