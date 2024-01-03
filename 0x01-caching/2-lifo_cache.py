@@ -2,6 +2,7 @@
 """LIFOCache class that inherits from BaseCaching"""
 from base_caching import BaseCaching
 
+
 class LIFOCache(BaseCaching):
     """A Last-In-First-Out (LIFO) caching system"""
 
