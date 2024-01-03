@@ -7,30 +7,26 @@ from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """
-    LifoCache class that inherits from BaseCaching
-    """
+    """A First-In-First-Out (FIFO) caching system"""
 
     def __init__(self):
-        """
-        Initilize LifoCache
-        """
+        """Initialize FIFOCache"""
         super().__init__()
+        self.queue = []
 
     def put(self, key, item):
-        """ Add an item in the cache
-        Using fifo logic
-        """
+        """Add an item to the cache using FIFO strategy"""
         if key is not None and item is not None:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                last_key = list(self.cache_data.keys())[-1]
-                del self.cache_data[last_key]
-                print("DISCARD: {}".format(last_key))
+            if key in self.cache_data:
+                self.queue.remove(key)
+            self.queue.append(key)
             self.cache_data[key] = item
 
+            if len(self.queue) > self.MAX_ITEMS:
+                removed_key = self.queue.pop(0)
+                self.cache_data.pop(removed_key)
+                print(f'DISCARD: {removed_key}')
+
     def get(self, key):
-        """
-        Get an item by key
-        """
-        if key is not None:
-            return self.cache_data.get(key)
+        """Retrieve the value associated with the given key"""
+        return self.cache_data.get(key)
