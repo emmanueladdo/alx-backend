@@ -4,7 +4,7 @@ BASIC FLASK APP
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, _, lazy_gettext
+from flask_babel import Babel
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -23,10 +23,9 @@ app.config.from_object(Config)
 @babel.localeselector
 def get_locale() -> str:
     """uses request accept best match"""
-    if request.args.get('locale'):
-        request_lang = request.args.get('locale')
-        if request_lang in app.config['LANGUAGES']:
-            return request_lang
+    locale = request.args.get('locale')
+    if locale and locale in Config.LANGUAGES:
+        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
