@@ -32,17 +32,17 @@ app.config.from_object(Config)
 def get_locale() -> str:
     """this method force the Locale of the app"""
     if request.args.get('locale'):
-        lang = request.args.get('locale')
-        if lang in app.config['LANGUAGES']:
-            return lang
+        requested_lang = request.args.get('locale')
+        if requested_lang in app.config['LANGUAGES']:
+            return requested_lang
     if g.user:
-        lang = g.user.get('locale')
-        if lang in app.config['LANGUAGES']:
-            return lang
-    lang = request.headers.get('locale', None)
-    if lang:
-        if lang in app.config['LANGUAGES']:
-            return lang
+        requested_lang = g.user.get('locale')
+        if requested_lang in app.config['LANGUAGES']:
+            return requested_lang
+    requested_lang = request.headers.get('locale', None)
+    if requested_lang:
+        if requested_lang in app.config['LANGUAGES']:
+            return requested_lang
     else:
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
