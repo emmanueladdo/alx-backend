@@ -5,7 +5,7 @@ BASIC FLASK APP
 
 from flask import Flask, render_template, request
 from flask_babel import Babel
-
+from typing import Union
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -21,11 +21,16 @@ app.config.from_object(Config)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale() -> Union[str, None]:
     """uses request accept best match"""
-    locale = request.args.get('locale')
-    if locale and locale in Config.LANGUAGES:
-        return locale
+    # Check if the 'locale' parameter is in the request args
+    if 'locale' in request.args:
+        # Get the value of the 'locale' parameter
+        requested_locale = request.args['locale']
+        
+        # Check if the requested_locale is a supported language
+        if requested_locale in app.config['LANGUAGES']:
+            return requested_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
