@@ -27,7 +27,7 @@ def get_locale() -> Union[str, None]:
     if 'locale' in request.args:
         # Get the value of the 'locale' parameter
         requested_locale = request.args['locale']
-        
+
         # Check if the requested_locale is a supported language
         if requested_locale in app.config['LANGUAGES']:
             return requested_locale
