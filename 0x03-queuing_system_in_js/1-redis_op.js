@@ -19,4 +19,9 @@ const displaySchoolValue = (schoolName) => {
       }
     });
   };
-  
+
+
+  //Function cal
+displaySchoolValue('Holberton');
+setNewSchool('HolbertonSanFrancisco', '100');
+displaySchoolValue('HolbertonSanFrancisco');
