@@ -1,4 +1,4 @@
-import { createClient, print } from 'redis';  // Use named imports
+import { createClient, print } from 'redis';
 
 const client = createClient();
 
@@ -15,7 +15,7 @@ const holbertonSchools = {
 };
 
 for (const [key, value] of Object.entries(holbertonSchools)) {
-  client.hset('HolbertonSchools', key, value, print);  // Use named print function
+  client.hset('HolbertonSchools', key, value, print);  
 }
 
 client.hgetall('HolbertonSchools', (err, obj) => {
