@@ -1,0 +1,26 @@
+import redis from 'redis';
+
+const publisherClient = redis.createClient();
+
+// Event listeners for connection status
+publisherClient.on('error', (err) => console.log('Redis client not connected to the server:', err));
+publisherClient.on('connect', () => console.log('Redis client connected to the server'));
+
+// Function to publish a message after a specified time
+const publishMessage = (message, time) => {
+  setTimeout(() => {
+    console.log(`About to send ${message}`);
+    publisherClient.publish('holberton school channel', message);
+  }, time);
+};
+
+// Call the function to publish messages
+publishMessage('Holberton Student #1 starts course', 100);
+publishMessage('Holberton Student #2 starts course', 200);
+publishMessage('KILL_SERVER', 300);
+publishMessage('Holberton Student #3 starts course', 400);
+
+// Close the Redis client when the script exits
+process.on('SIGINT', () => {
+  publisherClient.quit();
+});
